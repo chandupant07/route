@@ -50,6 +50,20 @@ class StudentController extends Controller
     public function edit($id)
     {
         $students = Student::findOrFail($id);
+        return view('students.edit', compact('students'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $students = Student::findOrFail($id);
+
+        //validate
+        $request->validate([
+            'name' => 'require',
+            'email' => 'require',
+            'phone' => 'require',
+            'img' => 'require'
+        ]);
     }
 
 }

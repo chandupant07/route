@@ -43,7 +43,7 @@
         <td>{{ $student->phone }}</td>
         <td><img src="{{ asset('images/' . $student->img)  }}" width="50" /></td>
         <td>
-        <a class="btn btn-primary btn-sm mt-3" href="{{ route('student.edit', $student->id) }}">Edit</a>
+        <a class="btn btn-primary btn-sm mt-3" href="{{ route('students.edit', $student->id) }}">Edit</a>
 
         </td>
       @endforeach
