@@ -28,7 +28,8 @@
   <div class="container">
     <h3>Add New Student</h3>
 
-    <form action="{{ route('student.store') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('students.store') }}" method="POST" enctype="multipart/form-data">
+      @csrf
       <div class="row shadow-lg p-3 mb-5 bg-body rounded">
         <div class="col-6">
           <label>Student Name</label>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Student;
 use Illuminate\Http\Request;
 
 class StudentController extends Controller
@@ -10,11 +11,16 @@ class StudentController extends Controller
     //
     public function index()
     {
-        return view('students.index');
+        $students = Student::all();
+        return view('students.index', compact('students'));
     }
 
+    public function create()
+    {
+        return view('students.create');
+    }
     //create controller
-    public function create(Request $request)
+    public function store(Request $request)
     {
         //validate all field
         $request->validate([
@@ -25,6 +31,25 @@ class StudentController extends Controller
         ]);
 
         // store image
-        return view('students.create');
+        $imgName = null;
+
+        if ($request->hasFile('img')) {
+            $image = $request->file('img');
+            $imgName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('images'), $imgName);
+        }
+        $student = Student::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'img' => $imgName,
+        ]);
+        return redirect()->route('students.index')->with('success', "Student {$student->name} add successfully");
     }
+
+    public function edit($id)
+    {
+        $students = Student::findOrFail($id);
+    }
+
 }
